@@ -1,7 +1,6 @@
 # REST API Count Magic Number
 
-[![Build Status]()
-
+[![Build Status](https://travis-ci.com/phelliperodrigues/magic-number.svg?branch=master)](https://travis-ci.com/phelliperodrigues/magic-number)
 This is a basic model of an api created with Java 11 and Spring Boot, guided by unit and integration tests
 
 ## Problem
