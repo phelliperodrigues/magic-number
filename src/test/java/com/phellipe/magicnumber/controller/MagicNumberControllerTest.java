@@ -69,7 +69,7 @@ public class MagicNumberControllerTest {
     @Test
     @DisplayName("Should return exception of magic number invalid")
     public void invalidNumbers() throws Exception {
-        String json = mapper.writeValueAsString(new Number());
+        String json = mapper.writeValueAsString(Arrays.asList(new Number()));
 
         MockHttpServletRequestBuilder request = post(API)
                 .contentType(APPLICATION_JSON)
