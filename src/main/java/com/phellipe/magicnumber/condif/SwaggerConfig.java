@@ -29,7 +29,7 @@ public class SwaggerConfig {
     private ApiInfo apiInfo(){
         return new ApiInfoBuilder()
                 .title("Magic Numbers API")
-                .description("Descobra os numeros magicos entre o range do array")
+                .description("Descubra os numeros magicos entre o range do array")
                 .version("1.0")
                 .contact(contact())
                 .build();
