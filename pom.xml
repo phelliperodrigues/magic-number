@@ -94,6 +94,7 @@
                             <exclude>com/phellipe/magicnumber/controller/dto/*</exclude>
                             <exclude>com/phellipe/magicnumber/controller/exceptions/*</exclude>
                             <exclude>com/phellipe/magicnumber/model/*</exclude>
+                            <exclude>com/phellipe/magicnumber/MagicNumberApplication.java</exclude>
 
                         </excludes>
                     </configuration>
