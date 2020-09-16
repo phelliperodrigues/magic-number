@@ -13,18 +13,16 @@ import java.util.stream.IntStream;
 public class MagicNumberServiceImp implements MagicNumberService {
 
     @Override
-    public int countMagicNumber(List<Number> numbers) throws ValidationException{
+    public int countMagicNumber(List<Number> numbers){
         AtomicInteger count = new AtomicInteger();
-
-      for (var number : numbers){
-          number.validation();
-
-          for (int i = number.getNumberA(); i <= number.getNumberB() ; i++) {
-              if (isSquareRoot(i) && isPrime((int) Math.sqrt(i)))
-                  count.getAndIncrement();
-          }
-      }
-
+        
+        numbers.forEach(number -> {
+            number.validation();
+            for (int i = number.getNumberA(); i <= number.getNumberB() ; i++) {
+                if (isSquareRoot(i) && isPrime((int) Math.sqrt(i)))
+                    count.getAndIncrement();
+            }
+        });
 
         return count.get();
     }
