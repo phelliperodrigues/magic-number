@@ -31,4 +31,10 @@ public class HandleExceptionAPI {
         return new ResponseEntity<Object>(
                 apiError, new HttpHeaders(), apiError.getStatus());
     }
+
+    @ExceptionHandler(ValidationException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ApiException handleBusinessException(ValidationException ex){
+        return new ApiException(ex);
+    }
 }

@@ -1,5 +1,6 @@
 package com.phellipe.magicnumber.service.impl;
 
+import com.phellipe.magicnumber.controller.exceptions.ValidationException;
 import com.phellipe.magicnumber.model.Number;
 import com.phellipe.magicnumber.service.MagicNumberService;
 import org.springframework.stereotype.Service;
@@ -12,15 +13,21 @@ import java.util.stream.IntStream;
 public class MagicNumberServiceImp implements MagicNumberService {
 
     @Override
-    public int countMagicNumber(List<Number> numbers) {
+    public int countMagicNumber(List<Number> numbers) throws ValidationException{
         AtomicInteger count = new AtomicInteger();
 
-        numbers.forEach(number -> {
-            for (int i = number.getNumberA(); i <= number.getNumberB() ; i++) {
-                if (isSquareRoot(i) && isPrime((int) Math.sqrt(i)))
-                    count.getAndIncrement();
-            }
-        });
+      for (var number : numbers){
+          try {
+              number.validation();
+          }catch (Exception e){
+              break;
+          }
+          for (int i = number.getNumberA(); i <= number.getNumberB() ; i++) {
+              if (isSquareRoot(i) && isPrime((int) Math.sqrt(i)))
+                  count.getAndIncrement();
+          }
+      }
+
 
         return count.get();
     }

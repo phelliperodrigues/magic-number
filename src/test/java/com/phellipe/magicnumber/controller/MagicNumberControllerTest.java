@@ -2,6 +2,7 @@ package com.phellipe.magicnumber.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.phellipe.magicnumber.controller.dto.MagicNumber;
+import com.phellipe.magicnumber.controller.exceptions.ValidationException;
 import com.phellipe.magicnumber.model.Number;
 import com.phellipe.magicnumber.service.MagicNumberService;
 import org.junit.jupiter.api.Assertions;
@@ -15,6 +16,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 
 import java.util.ArrayList;
@@ -86,8 +88,10 @@ public class MagicNumberControllerTest {
     @DisplayName("Should return exception of  number A greater number B")
     public void numberAGreaterNumberB() throws Exception {
         Number number = Number.builder().numberA(15).numberB(8).build();
-
+        var mensagemErro = "Number A cannot be less than Number B";
         String json = mapper.writeValueAsString(Arrays.asList(number));
+        given(service.countMagicNumber(Mockito.any(List.class)))
+                .willThrow(new ValidationException(mensagemErro));
 
         MockHttpServletRequestBuilder request = post(API)
                 .contentType(APPLICATION_JSON)
@@ -97,7 +101,7 @@ public class MagicNumberControllerTest {
         mvc.perform(request)
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("errors", hasSize(1)))
-                .andExpect(jsonPath("errors[0]").value("Number A cannot be less than Number B"));
+                .andExpect(jsonPath("errors[0]").value(mensagemErro));
 
     }
 
@@ -105,7 +109,16 @@ public class MagicNumberControllerTest {
     @Test
     @DisplayName("Should return exception of  numbers less 0")
     public void showExceptionNumbersNegative() throws Exception {
-        Assertions.fail();
+        String json = mapper.writeValueAsString(Arrays.asList(Number.builder().numberA(-5).numberB(10).build()));
+
+        MockHttpServletRequestBuilder request = post(API)
+                .contentType(APPLICATION_JSON)
+                .accept(APPLICATION_JSON)
+                .content(json);
+
+        mvc.perform(request)
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("errors", hasSize(1)));
     }
 
     private List<Number> createNumbersValid() {

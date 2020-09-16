@@ -28,4 +28,8 @@ public class ApiException {
         this.message = message;
         errors = Arrays.asList(error);
     }
+
+    public ApiException(ValidationException ex) {
+        this.errors = Arrays.asList(ex.getMessage());
+    }
 }
