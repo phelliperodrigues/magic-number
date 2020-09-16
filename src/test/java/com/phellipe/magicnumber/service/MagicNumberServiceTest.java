@@ -1,8 +1,9 @@
 package com.phellipe.magicnumber.service;
 
+import com.phellipe.magicnumber.controller.exceptions.ValidationException;
 import com.phellipe.magicnumber.model.Number;
 import com.phellipe.magicnumber.service.impl.MagicNumberServiceImp;
-import org.junit.jupiter.api.Assertions;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -14,6 +15,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @ExtendWith(SpringExtension.class)
@@ -39,6 +41,24 @@ public class MagicNumberServiceTest {
         int count = service.countMagicNumber(numbers);
 
         assertEquals(3, count);
+
+    }
+
+
+    @Test
+    @DisplayName("Should return exception when magic numberA greater numberB")
+    public void countMagicNumberAGreaterNumberB(){
+        Number number1 = Number.builder().numberA(40).numberB(27).build();
+
+        List<Number> numbers = new ArrayList<>();
+
+        numbers.addAll(Arrays.asList(number1));
+
+        Throwable exception = Assertions.catchThrowable(() ->service.countMagicNumber(numbers));
+
+        assertThat(exception)
+                .isInstanceOf(ValidationException.class)
+                .hasMessage("Number A cannot be less than Number B");
 
     }
 

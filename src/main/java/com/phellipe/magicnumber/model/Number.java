@@ -1,15 +1,11 @@
 package com.phellipe.magicnumber.model;
 
+import com.phellipe.magicnumber.controller.exceptions.ValidationException;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.core.MethodParameter;
-import org.springframework.web.bind.MethodArgumentNotValidException;
 
-import javax.validation.ConstraintViolationException;
-import javax.validation.Valid;
-import javax.validation.ValidationException;
 import javax.validation.constraints.*;
 
 @Data
@@ -19,18 +15,17 @@ import javax.validation.constraints.*;
 public class Number {
 
     @NotNull
-    @Positive
+    @Min(0)
     private Integer numberA;
 
     @NotNull
-    @Positive
+    @Min(0)
     private Integer numberB;
 
 
    public void validation(){
-
-       if (this.numberA > this.numberB){
-            throw new ValidationException("Number A cannot be less than Number B");
-       }
+       if(this.numberA > this.numberB){
+           throw new ValidationException("Number A cannot be less than Number B") ;
+       };
    }
 }

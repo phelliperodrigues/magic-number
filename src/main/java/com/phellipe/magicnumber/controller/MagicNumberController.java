@@ -4,6 +4,10 @@ import com.phellipe.magicnumber.controller.dto.MagicNumber;
 import com.phellipe.magicnumber.controller.exceptions.ApiException;
 import com.phellipe.magicnumber.model.Number;
 import com.phellipe.magicnumber.service.MagicNumberService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -24,17 +28,16 @@ import java.util.List;
 @Validated
 @RestController
 @RequestMapping("/api/magicnumber")
+@Api("Department API")
+@AllArgsConstructor
+@Slf4j
 public class MagicNumberController {
 
-    final
-    MagicNumberService service;
-
-    public MagicNumberController(MagicNumberService service) {
-        this.service = service;
-    }
+    final MagicNumberService service;
 
     @PostMapping
-    public MagicNumber count(@RequestBody List<@Valid Number> numbers) {
+    @ApiOperation("Retorna quantidade de numeros magicos na matriz")
+    public MagicNumber count(@RequestBody List<@Valid Number> numbers) throws Exception {
         int count = service.countMagicNumber(numbers);
 
         return MagicNumber.builder().count(count).build();

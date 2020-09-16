@@ -17,11 +17,8 @@ public class MagicNumberServiceImp implements MagicNumberService {
         AtomicInteger count = new AtomicInteger();
 
       for (var number : numbers){
-          try {
-              number.validation();
-          }catch (Exception e){
-              break;
-          }
+          number.validation();
+
           for (int i = number.getNumberA(); i <= number.getNumberB() ; i++) {
               if (isSquareRoot(i) && isPrime((int) Math.sqrt(i)))
                   count.getAndIncrement();
