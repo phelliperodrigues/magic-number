@@ -5,13 +5,20 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class Number {
 
-    private int numberA;
+    @NotNull
+    private Integer numberA;
 
-    private int numberB;
+    @NotNull
+    private Integer numberB;
+
+
 }
