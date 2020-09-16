@@ -85,7 +85,20 @@ public class MagicNumberControllerTest {
     @Test
     @DisplayName("Should return exception of  number A greater number B")
     public void numberAGreaterNumberB() throws Exception {
-        Assertions.fail();
+        Number number = Number.builder().numberA(15).numberB(8).build();
+
+        String json = mapper.writeValueAsString(Arrays.asList(number));
+
+        MockHttpServletRequestBuilder request = post(API)
+                .contentType(APPLICATION_JSON)
+                .accept(APPLICATION_JSON)
+                .content(json);
+
+        mvc.perform(request)
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("errors", hasSize(1)))
+                .andExpect(jsonPath("errors[0]").value("Number A cannot be less than Number B"));
+
     }
 
 
