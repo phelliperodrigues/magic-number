@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import static org.hamcrest.Matchers.hasSize;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -68,7 +69,16 @@ public class MagicNumberControllerTest {
     @Test
     @DisplayName("Should return exception of magic number invalid")
     public void invalidNumbers() throws Exception {
-        Assertions.fail();
+        String json = mapper.writeValueAsString(new Number());
+
+        MockHttpServletRequestBuilder request = post(API)
+                .contentType(APPLICATION_JSON)
+                .accept(APPLICATION_JSON)
+                .content(json);
+
+        mvc.perform(request)
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("errors", hasSize(2)));
     }
 
 
