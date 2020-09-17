@@ -1,4 +1,4 @@
-package com.phellipe.magicnumber.condif;
+package com.phellipe.magicnumber.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

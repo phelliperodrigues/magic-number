@@ -19,12 +19,16 @@ public class MagicNumberServiceImp implements MagicNumberService {
         numbers.forEach(number -> {
             number.validation();
             for (int i = number.getNumberA(); i <= number.getNumberB() ; i++) {
-                if (isSquareRoot(i) && isPrime((int) Math.sqrt(i)))
+                if (isMagicNumber(i))
                     count.getAndIncrement();
             }
         });
 
         return count.get();
+    }
+
+    private boolean isMagicNumber(int number) {
+        return isSquareRoot(number) && isPrime((int) Math.sqrt(number));
     }
 
     private boolean isPrime(int number) {
